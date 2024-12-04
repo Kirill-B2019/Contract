@@ -13,8 +13,8 @@ interface ITRC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-contract ProjectsFundTokenWithPrice is ITRC20 {
-    string public name = "Projects Fund Token (Price)";
+contract PFTWithPrice is ITRC20 {
+    string public name = "Projects Fund Token Price";
     string public symbol = "PFTp";
     uint8 public decimals = 6;
     uint256 public override totalSupply = 6626070150000000;
@@ -74,7 +74,7 @@ contract ProjectsFundTokenWithPrice is ITRC20 {
     }
 
     function updateXAUTPrice(uint256 _newPrice) public onlyOwner {
-        currentXAUTPrice = _newPrice;
+       currentXAUTPrice = _newPrice;
     }
 
     function getTokenPrice() public view returns (uint256) {
@@ -82,14 +82,7 @@ contract ProjectsFundTokenWithPrice is ITRC20 {
 
         uint256 pricePerGram = (currentXAUTPrice * 1e6) / 28349523125;
         uint256 basePrice = pricePerGram / 100;
-
-        if (distributedTokens >= (totalSupply * 20) / 100) {
-            return basePrice;
-        } else if (distributedTokens >= (totalSupply * 10) / 100) {
-            return (basePrice * 7) / 10;
-        } else {
-            return (basePrice * 4) / 10;
-        }
+        return basePrice;
     }
 
     function distributeTokens(address recipient, uint256 amount) public onlyOwner {
